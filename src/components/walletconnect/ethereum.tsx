@@ -64,16 +64,16 @@ const WalletConnectButton: React.FC<WalletConnectProps> = ({
     } catch (error) {}
   };
 
-  return (
+  return !disableConnectButton ? (
     <Button
       className="mr-2"
       variant="primary"
       onClick={onConnectToMetamaskClick}
       disabled={disableConnectButton}
     >
-      Connect to Ethereum with Metamask
+      Connect with Metamask
     </Button>
-  );
+  ) : null;
 };
 
 export default WalletConnectButton;

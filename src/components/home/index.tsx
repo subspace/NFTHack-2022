@@ -109,7 +109,7 @@ const Home: React.FC<HomeProps> = ({ opensea, connectedAddress }) => {
   return (
     <Container>
       <div className="d-flex">
-        <h3 className="m-1">Asset</h3>
+        <h3 className="m-1">My Vault Collections</h3>
         <Button variant="success" onClick={onRefreshClick}>
           Refresh
         </Button>

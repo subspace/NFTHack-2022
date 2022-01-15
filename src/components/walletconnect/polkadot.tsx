@@ -37,16 +37,16 @@ const PolkadotConnectButton: React.FC<PolkadotConnectProps> = ({
     }
   };
 
-  return (
+  return !disableConnectButton ? (
     <Button
       className="ml-2"
       variant="secondary"
       onClick={onConnectToPolkadotClick}
       disabled={disableConnectButton}
     >
-      Connect to Subspace with Polkadot Extension
+      Connect with Polkadot.js
     </Button>
-  );
+  ) : null;
 };
 
 export default PolkadotConnectButton;
