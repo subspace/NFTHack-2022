@@ -1,0 +1,11 @@
+{
+    "name": "subspace-opensea-nft-demo",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@openzeppelin/contracts": "^4.3.2",
+        "@truffle/hdwallet-provider": "^1.5.1",
+        "dotenv": "^10.0.0",
+        "opensea-js": "^1.2.1"
+    }
+}
