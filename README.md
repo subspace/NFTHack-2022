@@ -40,6 +40,8 @@ Start DAPP.
 
 - `yarn start`
 
+This will launch an app on localhost:3000. Remeber to use metamask with Rinkeby the test network.
+
 # Folder structure
 
 ## ./contracts
