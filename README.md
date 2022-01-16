@@ -46,13 +46,17 @@ This projects run on rinkeby testnet, you need an account with funds to deploy a
 
 - `https://faucet.rinkeby.io/`
 
-## Folder structure
+# Folder structure
 
-### truffle
+## subspace
+
+Subspace.js library to connect and use the Storage API.
+
+## truffle
 
 Contracts to be used in the DAPP.
 
-#### truffle .env
+- truffle .env
 
 MNEMONIC, Account used to deploy and test the dapp.
 RINKEBY_URL, URL for the wallet provider. (Infura, Alchemy, etc.)
@@ -62,15 +66,11 @@ MNEMONIC="flash flash flash flash ...."
 RINKEBY_URL="https://eth-rinkeby.alchemyapi.io/v2/KEY"
 ```
 
-### subspace
-
-Subspace.js.
-
-### dapp
+## dapp
 
 React Dapp, uses metamask and polkadot extension to Deploy and Mint NFT's on ethereum and Put and Get metadata files using the subspace network storage.
 
-#### dapp .env
+- dapp .env
 
 REACT_APP_NODE_WS_PROVIDER, subspace network node.
 REACT_APP_FARMER_WS_PROVIDER, subspace network farmer.
@@ -80,7 +80,7 @@ REACT_APP_NODE_WS_PROVIDER=ws://localhost:9944
 REACT_APP_FARMER_WS_PROVIDER=ws://localhost:9955
 ```
 
-## Run
+# Run
 
 After setting .env, install dependencies.
 
@@ -93,3 +93,4 @@ Compile contracts:
 Test contracts deployment:
 
 - `truffle migrate --network rinkeby`
+
