@@ -24,23 +24,30 @@ RINKEBY_URL="https://eth-rinkeby.alchemyapi.io/v2/KEY"
 
 # Run
 
-After setting .env, install dependencies.
+After setting .env and pre requisites installed.
+Go to the project root folder and install dependencies:
 
 - `yarn install`.
 
-Compile contracts:
+Test NFT contracts compilation:
 
 - `truffle compile`
 
-Test contracts deployment:
+Test NFT contracts deployment:
 
 - `truffle migrate --network rinkeby`
 
-Start DAPP.
+Go to ./subspace folder and run to build the lib:
+
+- `npm ci && npm run build`
+
+Go back to the project root folder and run to start the DAPP.
 
 - `yarn start`
 
-This will launch an app on localhost:3000. Remeber to use metamask with Rinkeby the test network.
+This will launch an app on localhost:3000.
+
+Remeber to use metamask connected to the `Rinkeby` test network.
 
 # Folder structure
 

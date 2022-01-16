@@ -156,7 +156,7 @@ const Mint: React.FC<MintProps> = ({
             //@ts-ignore
             let tokenId = receipt.events["Transfer"].returnValues["tokenId"];
             console.log("TokenId", tokenId);
-            setProgress("Delaying 5 seconds");
+            setProgress("Delaying 30 seconds");
             setTimeout(() => {
               if (opensea) {
                 setProgress("Placing sell order at open sea");
@@ -179,7 +179,7 @@ const Mint: React.FC<MintProps> = ({
                     setProgress(error.message);
                   });
               }
-            }, 5000);
+            }, 30000);
           }
         })
         .catch((error: any) => {

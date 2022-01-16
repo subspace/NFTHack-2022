@@ -1,4 +1,4 @@
-import { Identity, SubspaceClient } from "@subspace/subspace";
+import { SubspaceClient } from "@subspace/subspace";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Web3 from "web3";
@@ -11,7 +11,6 @@ export interface NavBarWrapperProps {
   accountAddress: string;
   setSelectedAccountAddress: (address: string) => void;
   setSubspaceClient: (client: SubspaceClient) => void;
-  setIdentity: (identity: Identity) => void;
   setProvider: (provider: Web3) => void;
   setConnectedAddress: (address: string) => void;
   setChainId: (chainId: string) => void;
@@ -22,7 +21,6 @@ const NavBarWrapper: React.FC<NavBarWrapperProps> = ({
   accountAddress,
   setSelectedAccountAddress,
   setSubspaceClient,
-  setIdentity,
   setProvider,
   setConnectedAddress,
   setChainId,
@@ -66,21 +64,27 @@ const NavBarWrapper: React.FC<NavBarWrapperProps> = ({
 
             {address.length > 0 ? (
               <>
-                Ethereum: <a href="#">{prettyHash(address, 6, 6)}</a>
+                Ethereum:{" "}
+                <a
+                  rel="noreferrer"
+                  target={"_blank"}
+                  href={"https://rinkeby.etherscan.io/address/" + address}
+                >
+                  {prettyHash(address, 6, 6)}
+                </a>
               </>
             ) : null}
           </Navbar.Text>
+          <Navbar.Text className="pr-2 pl-2">|</Navbar.Text>
+
           <Navbar.Text>
             <PolkadotConnectButton
               setSelectedAccountAddress={setSelectedAccountAddress}
               setSubspaceClient={setSubspaceClient}
-              setIdentity={setIdentity}
             ></PolkadotConnectButton>
 
             {accountAddress.length > 0 ? (
-              <>
-                Subspace: <a href="#">{prettyHash(accountAddress, 6, 6)}</a>
-              </>
+              <>Subspace: {prettyHash(accountAddress, 6, 6)}</>
             ) : null}
           </Navbar.Text>
         </Navbar.Collapse>

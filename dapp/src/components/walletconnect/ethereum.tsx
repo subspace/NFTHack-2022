@@ -1,6 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Web3 from "web3";
 
@@ -22,7 +22,13 @@ const WalletConnectButton: React.FC<WalletConnectProps> = ({
   const [disableConnectButton, setDisableConnectButton] =
     useState<boolean>(false);
 
-  const onConnectToMetamaskClick = async () => {
+  useEffect(() => {
+    return () => {
+      setDisableConnectButton(false);
+    };
+  }, []);
+
+  const onConnectClick = async () => {
     const provider = await detectEthereumProvider();
     if (provider && window.ethereum) {
       await listenMetamask(window.ethereum as MetaMaskInpageProvider);
@@ -68,7 +74,9 @@ const WalletConnectButton: React.FC<WalletConnectProps> = ({
     <Button
       className="mr-2"
       variant="primary"
-      onClick={onConnectToMetamaskClick}
+      onClick={() => {
+        onConnectClick();
+      }}
       disabled={disableConnectButton}
     >
       Connect with Metamask
