@@ -12,6 +12,7 @@ import {
 import Web3 from "web3";
 import { TransactionReceipt } from "web3-core";
 import ERC721 from "../../contract/ERC721";
+import { ipfs } from "../../services/ipfs.service";
 
 export interface MintProps {
   subspaceClient: SubspaceClient;
@@ -116,31 +117,43 @@ const Mint: React.FC<MintProps> = ({
     }
     if (provider) {
       let fileHash: string = "";
+      let objectId: string = "";
       if (file) {
-        setProgress("Uploading file to subspace");
-        console.log("Uploading file to subspace");
-        const value = new Uint8Array(await file.arrayBuffer());
-        fileHash = await subspaceClient.putObject(value);
+        setProgress("Uploading file to IPFS");
+        console.log("Uploading file");
+        fileHash = await ipfs.add(file).then((r) => r.cid.toString());
         console.log("File hash", fileHash);
+        setProgress("File successfully uploaded to IPFS");
 
-        setProgress("File successfully uploaded to subspace");
+        setProgress("Backup file to subspace");
+        console.log("Backup file to subspace");
+        const objectData = new Uint8Array(await file.arrayBuffer());
+        objectId = await subspaceClient.putObject(objectData);
+        console.log("File objectId", objectId);
+        setProgress("File successfully backup to subspace");
       }
-      setProgress("Uploading token URI to subspace");
-      console.log("Uploading token URI to subspace");
-      const tokenUri = new TextEncoder().encode(
-        JSON.stringify({
-          name,
-          description,
-          image: fileHash,
-          external_url: externalLink,
-          attributes,
-        })
-      );
-
-      const tokenUriHash = await subspaceClient.putObject(tokenUri);
-
+      const uriData = JSON.stringify({
+        name,
+        description,
+        image: `ipfs://${fileHash}`,
+        external_url: externalLink,
+        attributes,
+      });
+      setProgress("Uploading token URI to IPFS");
+      console.log("Uploading token URI");
+      const tokenUriHash = await ipfs
+        .add(uriData)
+        .then((r) => r.cid.toString());
       console.log("TokenURI hash", tokenUriHash);
-      setProgress("Token URI successfully uploaded");
+      setProgress("Token URI successfully uploaded to IPFS");
+
+      setProgress("Backup token URI to subspace");
+      console.log("Backup token URI to subspace");
+      const tokenUriData = new TextEncoder().encode(uriData);
+      const tokenUriObjectId = await subspaceClient.putObject(tokenUriData);
+      console.log("tokenUriObjectId", tokenUriObjectId);
+      setProgress("Token URI successfully backup to Subspace");
+
       const [address] = selectedContract.split("_");
       //@ts-ignore
       const contract = new provider.eth.Contract(ERC721.abi, address);

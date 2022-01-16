@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import Web3 from "web3";
 import ERC721 from "../../contract/ERC721";
+import { ipfs } from "../../services/ipfs.service";
 
 export interface CollectionProps {
   subspaceClient: SubspaceClient;
@@ -33,35 +34,55 @@ const Collection: React.FC<CollectionProps> = ({
       // @ts-ignore
       const contract = new provider.eth.Contract(ERC721.abi);
       let logoHash = "";
+      let objectId = "";
       if (imageFile) {
-        setProgress("Uploading logo to subspace");
-        console.log("Uploading logo to subspace");
-        const value = new Uint8Array(await imageFile.arrayBuffer());
-        logoHash = await subspaceClient.putObject(value);
-        console.log("Logo", logoHash);
-        setProgress("Logo upload completed");
+        setProgress("Uploading logo to IPFS");
+        console.log("Uploading logo to IPFS");
+        logoHash = await ipfs.add(imageFile).then((r) => r.cid.toString());
+        console.log("logoHash", logoHash);
+        setProgress("Logo upload on IPFScompleted");
+
+        setProgress("Backup logo to subspace");
+        console.log("Backup logo to subspace");
+        const objectData = new Uint8Array(await imageFile.arrayBuffer());
+        objectId = await subspaceClient.putObject(objectData);
+        console.log("objectId", objectId);
+        setProgress("Logo Backup completed");
       }
-      setProgress("Uploading contract uri to subspace");
-      console.log("Uploading contract uri to subspace");
-      const contractUri = new TextEncoder().encode(
-        JSON.stringify({
-          name,
-          description,
-          image: logoHash,
-          external_link: externalLink,
-        })
-      );
+      setProgress("Uploading contract uri to IPFS");
+      console.log("Uploading contract uri to IPFS");
 
-      const contractUriHash = await subspaceClient.putObject(contractUri);
+      const uriData = JSON.stringify({
+        name,
+        description,
+        image: logoHash,
+        external_link: externalLink,
+      });
 
+      const contractUriHash = await ipfs
+        .add(uriData)
+        .then((r) => r.cid.toString());
       console.log("contractUriHash", contractUriHash);
-      setProgress("Contract URI upload completed");
-      setProgress("Deploying contract");
+      setProgress("Contract URI upload to IPFS completed");
 
+      const contractUriData = new TextEncoder().encode(uriData);
+      const contractUriObjectId = await subspaceClient.putObject(
+        contractUriData
+      );
+      console.log("contractUriObjectId", contractUriObjectId);
+      setProgress("Contract URI backup to Subspace completed");
+
+      setProgress("Deploying contract");
       contract
         .deploy({
           data: ERC721.bytecode,
-          arguments: [name, symbol, contractUriHash],
+          arguments: [
+            name,
+            symbol,
+            contractUriHash,
+            contractUriObjectId,
+            objectId,
+          ],
         })
         .send({
           from: connectedAddress,

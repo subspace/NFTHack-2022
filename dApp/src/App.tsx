@@ -68,86 +68,89 @@ function App() {
           setConnectedAddress={setConnectedAddress}
           setProvider={setProvider}
         />
-        <Container>
-          <Row>
-            <Col md="6">
-              <Card>
-                <Card.Body>
-                  <Card.Title>Ethereum Network - Metamask</Card.Title>
-                  <Card.Text>
-                    Please connect using Metamask Extension. This allows you to
-                    connect to the Ethereum Network, create an NFT Collections,
-                    Mint a new NFT, List you NFT on OpenSea, Show you assets in
-                    this home page.
-                  </Card.Text>
-                  <Card.Link href="https://metamask.io/" target={"_blank"}>
-                    Install Metamask
-                  </Card.Link>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col md="6">
-              <Card>
-                <Card.Body>
-                  <Card.Title>
-                    Subspace Network - Polkadot.js Extension
-                  </Card.Title>
-                  <Card.Text>
-                    Please connect using Polkadot.js Extension. This allows you
-                    to connect to the Subspace Network to put and get files for
-                    your NFT's and Collections metadata.
-                  </Card.Text>
-                  <Card.Link
-                    href="https://polkadot.js.org/extension/"
-                    target={"_blank"}
-                  >
-                    Install Polkadot.js Extension
-                  </Card.Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-          <hr className="mt-4 mb-4"></hr>
-          <Row>
-            <p>How this Works?</p>
-            <p>
-              This is a Demo DAPP, it uses <b>Ethereum Rinkeby</b> network to
-              <b> deploy </b> NFT Collections and Token contracts. The deployed
-              contracts are <b>owned</b> by the connected account using
-              metamask.
-            </p>
-            <p>
-              At the same time, we connect to Subspace Network and use the
-              Storage API to put and get NFT metadata files.
-            </p>
-            <p>Happy Path:</p>
+        {!subspaceClient && (
+          <Container>
+            <Row>
+              <Col md="6">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Ethereum Network - Metamask</Card.Title>
+                    <Card.Text>
+                      Please connect using Metamask Extension. This allows you
+                      to connect to the Ethereum Network, create an NFT
+                      Collections, Mint a new NFT, List you NFT on OpenSea, Show
+                      you assets in this home page.
+                    </Card.Text>
+                    <Card.Link href="https://metamask.io/" target={"_blank"}>
+                      Install Metamask
+                    </Card.Link>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md="6">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>
+                      Subspace Network - Polkadot.js Extension
+                    </Card.Title>
+                    <Card.Text>
+                      Please connect using Polkadot.js Extension. This allows
+                      you to connect to the Subspace Network to put and get
+                      files for your NFT's and Collections metadata.
+                    </Card.Text>
+                    <Card.Link
+                      href="https://polkadot.js.org/extension/"
+                      target={"_blank"}
+                    >
+                      Install Polkadot.js Extension
+                    </Card.Link>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+            <hr className="mt-4 mb-4"></hr>
+            <Row>
+              <p>How this Works?</p>
+              <p>
+                This is a Demo dApp, it uses <b>Ethereum Rinkeby</b> network to
+                <b> deploy </b> NFT Collections and Token contracts. The
+                deployed contracts are <b>owned</b> by the connected account
+                using metamask.
+              </p>
+              <p>
+                At the same time, we connect to Subspace Network and use the
+                Storage API to put and get NFT metadata files.
+              </p>
 
-            <span>
-              <p>
-                - <b> Connect </b> to Ethereum Rinkeby using metamask (Need an
-                account with funds, https://faucet.rinkeby.io/)
-              </p>
-              <p>
-                - <b> Connect </b> to Subspace Network using Polkadot.js
-                Extension.
-              </p>
-              <p>
-                - Create a <b>new NFT Collection</b> and <b> deploy </b> the
-                contract to Ethereum.
-              </p>
-              <p>
-                - Create a <b>new NFT Item </b> using an existing Collection.
-              </p>
-              <ul>
-                <li> Store Attached File to Subspace Network.</li>
-                <li> Attach File (ObjectId) to the NFT Item.</li>
-                <li> Mint and approve the new NFT.</li>
-                <li> List the NFT in opensea.</li>
-                <li> Show your NFT's and Collections in the home page.</li>
-              </ul>
-            </span>
-          </Row>
-        </Container>
+              <p>Happy Path:</p>
+
+              <span>
+                <p>
+                  - <b> Connect </b> to Ethereum Rinkeby using metamask (Need an
+                  account with funds, https://faucet.rinkeby.io/)
+                </p>
+                <p>
+                  - <b> Connect </b> to Subspace Network using Polkadot.js
+                  Extension.
+                </p>
+                <p>
+                  - Create a <b>new NFT Collection</b> and <b> deploy </b> the
+                  contract to Ethereum.
+                </p>
+                <p>
+                  - Create a <b>new NFT Item </b> using an existing Collection.
+                </p>
+                <ul>
+                  <li> Store Attached File to Subspace Network.</li>
+                  <li> Attach File (ObjectId) to the NFT Item.</li>
+                  <li> Mint and approve the new NFT.</li>
+                  <li> List the NFT in OpenSea.</li>
+                  <li> Show your NFT's and Collections in the home page.</li>
+                </ul>
+              </span>
+            </Row>
+          </Container>
+        )}
         <Switch>
           <Route path="/" exact={true}>
             {subspaceClient && (
