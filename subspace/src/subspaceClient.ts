@@ -79,7 +79,7 @@ export class SubspaceClient {
           if (status.isInBlock) {
             for (const { event } of events) {
               if (
-                event.method === "ObjectSubmitted" &&
+                event.method === "DataSubmitted" &&
                 event.section === "objectStore"
               ) {
                 resolve(event.data[1].toString().slice(2));

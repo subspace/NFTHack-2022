@@ -1,6 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Web3 from "web3";
 
@@ -31,6 +31,7 @@ const WalletConnectButton: React.FC<WalletConnectProps> = ({
   const onConnectClick = async () => {
     const provider = await detectEthereumProvider();
     if (provider && window.ethereum) {
+          //@ts-ignore
       await listenMetamask(window.ethereum as MetaMaskInpageProvider);
     } else {
       alert("Please install Metamask Extension");
