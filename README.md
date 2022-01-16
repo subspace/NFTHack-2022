@@ -36,12 +36,26 @@ Test contracts deployment:
 
 - `truffle migrate --network rinkeby`
 
+Start DAPP.
+
+- `yarn start`
+
 # Folder structure
 
-## Contracts
+## ./contracts
 
 NFT Contracts to be used in the DAPP.
 
-## Migrations
+## ./migrations
 
 Truffle scripts to compile and deploy contracts.
+
+## ./subspace
+
+A copy of the Subspace.js library to get the latest Storage API development version. It includes all the Polkadot.js libraries necesaries to connect to the Subspace Network and make use of the Storage API.
+
+## ./src - ./public
+
+A react app using NFT compiled contracts, metamask extension, polkadot extension, opensea.js.
+
+Note: if you made modifications to the Solidity Contracts code, you need to update ./src/contract/ERC721.ts. This file contains ABI and Bytecode to interact with it.
