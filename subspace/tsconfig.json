@@ -3,7 +3,7 @@
     "declaration": true,
     "target": "ES2021",
     "outDir": "dist",
-    "module": "commonjs",
+    "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "node",
     "sourceMap": true,

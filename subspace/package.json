@@ -9,8 +9,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc"
+    "prepublishOnly": "npm run build",
+    "build": "rm -rf dist && tsc",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"no test specified yet\" && exit 0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subspace/subspace.js.git"
+  },
+  "author": "Leo Salgado<leo@subspace.network>",
   "dependencies": {
     "@polkadot/api": "^6.12.1",
     "@polkadot/extension-dapp": "^0.42.2",
@@ -20,6 +28,10 @@
     "@polkadot/util-crypto": "^8.1.2"
   },
   "devDependencies": {
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-eslint-plugin": "^3.5.3"
   }
 }
